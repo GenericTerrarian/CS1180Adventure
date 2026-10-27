@@ -87,48 +87,32 @@ public class Main {
 
     //endregion
 
-    //region Handler Variables==============================================================================
+    //region Important Variables============================================================================
 
     //region Those Annonying Little Guys That You Shouldn't Have  To Import
 
-    static Scanner scnr = new Scanner(System.in);
     static Random rand = new Random();
-
-    //endregion
-
-    //region ynValue Gets A Special Little House :3
-
-    static boolean ynValue = false;
 
     //endregion
 
     //endregion
 
     //Inventory Objects
-
+/*
     //region Items==========================================================================================
-
-    //region Item Descriptions
-
-    //endregion
 
     //region Item Constructors
     //final static Item X = new Item("X", X_DESC, 0, 0);
 
-    final static Item CLEAN_BANDAGES = new Item("Clean Bandages", null, 30, 0);
-    final static Item SOOTHING_POULTICE = new Item("Soothing Poultice", null, 60, 0);
-    final static Item LIFEFORCE_POTION = new Item("Lifeforce Potion", null, 120, 0);
-    final static Item GOLDEN_CORE = new Item("Golden Core", null, 999999, 0);
+    //final static Item STAR_BIT = new Item("Star Bit", null, 50, 1); //PP
+    //final static Item ARCANE_CORE = new Item("Arcane Core", null, 100, 1); //PP
+    //final static Item JOULE_JEWEL = new Item("Joule Jewel", null, 3, 2); //AP
+    //final static Item CRAZY_DIAMOND = new Item("Crazy Diamond", null, 7, 2); //AP
 
-    final static Item STAR_BIT = new Item("Star Bit", null, 50, 1); //PP
-    final static Item ARCANE_CORE = new Item("Arcane Core", null, 100, 1); //PP
-    final static Item JOULE_JEWEL = new Item("Joule Jewel", null, 3, 2); //AP
-    final static Item CRAZY_DIAMOND = new Item("Crazy Diamond", null, 7, 2); //AP
-
-    final static Item WATER_STONE = new Item("Water Stone", null, 0, 3); //Buffs Health
-    final static Item EARTH_STONE = new Item("Earth Stone", null, 0, 4); //Buffs Defense
-    final static Item FIRE_STONE = new Item("Fire Stone", null, 0, 5); //Buffs Attack
-    final static Item WIND_STONE = new Item("Wind Stone", null, 0, 6); //Buffs Speed
+    //final static Item WATER_STONE = new Item("Water Stone", null, 0, 3); //Buffs Health
+    //final static Item EARTH_STONE = new Item("Earth Stone", null, 0, 4); //Buffs Defense
+    //final static Item FIRE_STONE = new Item("Fire Stone", null, 0, 5); //Buffs Attack
+    //final static Item WIND_STONE = new Item("Wind Stone", null, 0, 6); //Buffs Speed
 
 
     //endregion
@@ -237,7 +221,7 @@ public class Main {
     //endregion
 
     //endregion
-
+*/
     //Attacks, Spells, Conditions
 
     //region Attacks========================================================================================
@@ -389,11 +373,9 @@ public class Main {
 
     //endregion
 
-    //region Heroes=========================================================================================
+    //region Stats/Inventory================================================================================
 
-    //region Stats/Inventory
-
-    static ArrayList<Item> itemInventory = new ArrayList<Item>(List.of(new Item(SOOTHING_POULTICE), new Item(SOOTHING_POULTICE), new Item(SOOTHING_POULTICE), new Item(GOLDEN_CORE)));
+    static ArrayList<Item> itemInventory = new ArrayList<Item>(List.of(Item.NewInst(0), Item.NewInst(0), Item.NewInst(0), Item.NewInst(3)));
     static ArrayList<Armor> armorInventory = new ArrayList<Armor>(0);
     static ArrayList<Weapon> weaponInventory = new ArrayList<Weapon>(0);
     static ArrayList<Charm> charmInventory = new ArrayList<Charm>(0);
@@ -412,24 +394,7 @@ public class Main {
     static boolean shopkeepFound = false;
     static byte floorsFound = 0;
 
-    static Hero[] partyArray = {null, null, null, null};
-
-    //endregion
-
-    //region Hero Descriptions
-
-    //endregion
-
-    //region Hero Constructors
-
-    //static final Hero X = new Hero("X", X_DESC, new int[] {}, new Attack[] {}, new Spell[] {}, null, null, new Charm[] {null, null}, 0);
-
-    static final Hero JOURNEY =         new Hero("Journey", X_DESC,           new int[] {0, 0, 0, 0}, new Attack[] {null, null}, new Spell[] {}, null, null, new Charm[] {null, null}, 0);
-    static final Hero ALEXANDER =       new Hero("Alexander", X_DESC,         new int[] {0, 0, 0, 0}, new Attack[] {null, null}, new Spell[] {}, null, null, new Charm[] {null, null}, 0);
-    static final Hero UNCLE_BOB =       new Hero("Uncle Bob", X_DESC,         new int[] {0, 0, 0, 0}, new Attack[] {null, null}, new Spell[] {}, null, null, new Charm[] {null, null}, 0);
-    static final Hero LUNA =            new Hero("Luna", X_DESC,              new int[] {0, 0, 0, 0}, new Attack[] {null, null}, new Spell[] {}, null, null, new Charm[] {null, null}, 0);
-
-    //endregion
+    static Hero[] partyArray = {Hero.GetNew(0,0), Hero.GetNew(0,1), Hero.GetNew(0,2), Hero.GetNew(0,3)};
 
     //endregion
 
@@ -547,7 +512,7 @@ public class Main {
             directionList.add("West");
         }
 
-        int answer = PrintMenu(directionList.toArray(new String[0]), true);
+        int answer = Text.PrintMenu(directionList.toArray(new String[0]), true);
 
         switch (directionList.get(answer)) {
             case "North":
@@ -576,7 +541,7 @@ public class Main {
         }
 
         System.out.println("The party is in room (" + location[0] + ", " + location[1] + ")");
-        Prompt();
+        Text.Prompt();
 
         BattleCheck();
 
@@ -588,13 +553,13 @@ public class Main {
     public static void MagicMirror() {
 
         System.out.println("Are you sure?");
-        PromptYN();
+        Text.PromptYN();
 
-        if (ynValue == true) {
+        if (Text.PromptYN() == true) {
             location[0] = location[2] + 2;
             location[1] = 0;
             System.out.println("The party gazes into the mirror and is instantly transported to the entrance of the" + XERO + " Temple." + RESET);
-            Prompt();
+            Text.Prompt();
         }
 
         return;
@@ -604,7 +569,7 @@ public class Main {
     //Searches the room for treasure
     public static void SearchRoom() {
 
-        EMPTY_FUNCTION();
+        Text.EMPTY_FUNCTION();
 
     }
 
@@ -632,7 +597,7 @@ public class Main {
 
         PrintMapLegend();
 
-        Prompt();
+        Text.Prompt();
 
     }
 
@@ -743,7 +708,7 @@ public class Main {
     //Prints the map legend (HELPER FUNCTION)
     public static void PrintMapLegend() {
 
-        EMPTY_FUNCTION();
+        Text.EMPTY_FUNCTION();
 
     }
 
@@ -813,24 +778,24 @@ public class Main {
         System.out.println("the party finds itself face to face with an ancient temple.");
         System.out.println("Despite dark forests, barren deserts, burning crags, and deep mires");
         System.out.println("here before you lay the Temple of" + XERO + " Xero, the Blood Goddess" + RESET + ".\n");
-        Prompt();
+        Text.Prompt();
 
         System.out.println("The wise old sage, Uncle Bob, leader and founder of your group, brought");
         System.out.println("you together for the purpose of fulfilling the" + GOLD + " Golden Prophecy " + RESET + "foretold");
         System.out.println("in ages past. The" + GOLD + " Prophecy " + RESET + "states that at the seventh toll of the");
         System.out.println(XERO + "Doomsday Clock" + RESET + ", four" + HERO + " Heroes " + RESET + "will rise to defeat the" + XERO + " Blood Goddess" + RESET + ".\n");
-        Prompt();
+        Text.Prompt();
 
         System.out.println("This group of" + HERO + " Heroes " + RESET + "consists of:\n");
         System.out.println("Journey, the renowned sorceress and swordfighter, known for her ice magic and raw destructive power,");
         System.out.println("Alexander, the Captain of the Royal Guard with his impeccable musketeering and indomitable grit,");
         System.out.println("Uncle Bob, the wise sage and hermit of the" + GOLD + " Golden Scrolls " + RESET + "who possesses knowledge and spells beyond compare,");
         System.out.println("And Luna, the Witch Doctor of the Xenomite Caves with her life giving medicine and deadly poisons.\n");
-        Prompt();
+        Text.Prompt();
 
         System.out.println("The brave" + HERO + " Heroes " + RESET + "prepare themselves for the worst, and march forward");
         System.out.println("into the" + XERO + " Blood Temple" + RESET + ".\n");
-        Prompt();
+        Text.Prompt();
         return;
 
     }
@@ -840,7 +805,7 @@ public class Main {
         System.out.println(STAR3 + " GAMEPLAY TUTORIAL " + STAR3 + "\n");
         System.out.println("This small game is not JUST a choose your own adventure, but also includes");
         System.out.println("a turn-based RPG battle system and a dungeon exploration system");
-        Prompt();
+        Text.Prompt();
 
         System.out.println("As for the battle system:\n");
         System.out.println("A battle occurs when the" + HERO + " Hero " + RESET + "party and a" + XERO + " Monster " + RESET + "party meet.\n");
@@ -849,7 +814,7 @@ public class Main {
         System.out.println(SHARP + " Attack (ATK) - Dictates how much health is deducted from your target's HP when fighting;");
         System.out.println(SAFE + " Defense (DEF) - Reduces the amount of incoming damage;");
         System.out.println(SPIRAL + " Speed (SPD) - Determines the order of who acts first in a Battle Cycle.");
-        Prompt();
+        Text.Prompt();
 
         System.out.println("There are also four different kinds of actions in a battle:\n");
         System.out.println(" - 1. Attacking deals damage to a target in the opposing party;");
@@ -861,7 +826,7 @@ public class Main {
         System.out.println("Every turn, each character is allotted 3 AP. Different actions take different amounts of AP.");
         System.out.println("AP rolls over between turns, so if a character does nothing one turn, it can do twice as much the next turn (Max 10 AP).");
         System.out.println("One \"Battle Cycle\" completes every time all characters have a turn.");
-        Prompt();
+        Text.Prompt();
 
         System.out.println("Both parties in a battle have a Power Point (PP) meter. Power Points are the energy necessary for");
         System.out.println("casting spells. A little PP can be gained from Attacking, A lot of PP can be gained from Guarding,");
@@ -870,13 +835,13 @@ public class Main {
         System.out.println("Each party shares a single PP meter. This means that characters with less to do in a turn are not complete");
         System.out.println("dead weight as they can guard to contribute PP to more active characters. This also means that only one or two");
         System.out.println("spells can be used per Cycle as each character does not draw from their own individual pool of PP.");
-        Prompt();
+        Text.Prompt();
 
         System.out.println("Finally, all characters are subject to \"Conditions\". Conditions are statuses that last a few turns");
         System.out.println("and can cause a variety of effects. Some conditions reduce stats, some increase stats, and others");
         System.out.println("do something entirely unique. Conditions are usually inflicted by spells, but some normal attacks");
         System.out.println("have Conditions tied to them.");
-        Prompt();
+        Text.Prompt();
 
         System.out.println("As for dungeon exploration:\n");
         System.out.println("The" + XERO + " Blood Temple " + RESET + "has three floors. The first floor has 25 rooms (5x5), the second");
@@ -884,21 +849,21 @@ public class Main {
         System.out.println("inside. The" + XERO + " Boss Room " + RESET + "requires a" + XERO + " Boss Key " + RESET + "to enter, which is stashed in one of the rooms on the floor.");
         System.out.println("Once the" + XERO + " Boss Monster " + RESET + "is defeated, a stairwell leading to the next floor will appear at the entrance to the");
         System.out.println(XERO + "Temple" + RESET + "." + XERO + " Xero " + RESET + "herself resides in the final floor as its" + XERO + " Boss Monster" + RESET);
-        Prompt();
+        Text.Prompt();
 
         System.out.println("Each room has up to four doors, North, South, East, and West. Not all rooms have");
         System.out.println("all four doors, however. Some have as few as only a single entrance. Each time a");
         System.out.println("room is entered, there is a chance for a battle to occur. After defeating a party");
         System.out.println("of" + XERO + " monsters" + RESET + ", the floor's" + XERO + " monster count " + RESET + "is reduced, lowering the chance of an encounter");
         System.out.println("until there are no" + XERO + " monsters " + RESET + "left.");
-        Prompt();
+        Text.Prompt();
 
         System.out.println("Armor, weapons, charms, and items can be found in rooms after defeating any" + XERO + " monsters " + RESET);
         System.out.println("that are encountered. These objects will be of great use during your exploration, so");
         System.out.println("make sure to search every room you enter before leaving.\n");
 
         System.out.println("A map is available at all times, so make sure to use it frequently to keep your bearings.");
-        Prompt();
+        Text.Prompt();
         return;
 
     }
@@ -912,7 +877,7 @@ public class Main {
     //This prompts the user to use any of the menu options for the overworld
     public static void PromptMenuOverworld() {
 
-        switch (PrintMenu(new String[] {"Party Info", "Inventory", "Check Map", "Leave Room", "Search Room"}, false)) {
+        switch (Text.PrintMenu(new String[] {"Party Info", "Inventory", "Check Map", "Leave Room", "Search Room"}, false)) {
             case 0:
                 PromptMenuPartyInfo();
                 break;
@@ -934,7 +899,27 @@ public class Main {
 
     public static void PromptMenuPartyInfo() {
 
-        EMPTY_FUNCTION();
+        for (int i = 0; i < partyArray.length; i++) {
+            System.out.print(i + ". ");
+            partyArray[i].PrintHP(true);
+            System.out.println();
+        }
+
+        System.out.print("\nDescribe a hero?:"); Text.PromptYN();
+
+        if (Text.PromptYN()) {
+            int whichHero = Text.PrintMenu(Arrays.stream(partyArray).map(Hero::GetName).toArray(String[]::new), true);
+
+            if (whichHero != partyArray.length) {
+                partyArray[whichHero].DescribeHero();
+            }
+            else {
+                return;
+            }
+        }
+        else {
+            return;
+        }
 
     }
 
@@ -944,26 +929,39 @@ public class Main {
 
         System.out.println("Which Inventory?:\n");
 
-        int whichInv = PrintMenu(new String[] {"Items", "Weapons", "Armors", "Charms"}, true);
+        int whichInv = Text.PrintMenu(new String[] {"Items", "Weapons", "Armors", "Charms"}, true);
 
         if (whichInv == 4) {
             return;
         }
         else {
-            int whichItem  = PrintMenu(INVENTORY_ARRAY[whichInv].stream().map(NameObject::GetName).toArray(String[]::new), true);
+            int whichObject  = Text.PrintMenu(INVENTORY_ARRAY[whichInv].stream().map(NameObject::GetName).toArray(String[]::new), true);
 
-            if (whichItem == INVENTORY_ARRAY[whichInv].size()) {
+            if (whichObject == INVENTORY_ARRAY[whichInv].size()) {
                 return;
             }
             else {
 
-                NameObject item = INVENTORY_ARRAY[whichInv].get(whichItem);
+                NameObject object = INVENTORY_ARRAY[whichInv].get(whichObject);
 
-                if (item instanceof Equippable) {
-                    DescribeEquippable((Equippable) item);
+                if (object instanceof Equippable) {
+                    int whichEquippable = Text.PrintMenu(new String[] {"Equip", "Description"}, true);
+
+                    if (whichEquippable == 2) {
+                        return;
+                    }
+                    else if (whichEquippable == 1) {
+                        DescribeEquippable((Equippable) object);
+                        return;
+                    }
+                    else {
+                        EquipEquippable((Equippable) object);
+                        return;
+                    }
+
                 }
                 else {
-                    EMPTY_FUNCTION();
+                    DescribeItem((Item) object);
                 }
 
             }
@@ -971,8 +969,35 @@ public class Main {
 
     }
 
-    public static void DescribeEquippable(Equippable item) {
-        EMPTY_FUNCTION();
+    public static void DescribeItem(Item item) {
+
+        System.out.println(item.description);
+        if (item.statistics[0] != 0) {
+            System.out.println("HP: " + item.statistics[0]);
+        }
+        if (item.statistics[1] != 0) {
+            System.out.println("AP: " + item.statistics[1]);
+        }
+        if (item.statistics[2] != 0) {
+            System.out.println("PP: " + item.statistics[2]);
+        }
+        if (item.statistics[3] != 0) {
+            System.out.println("Condition: ");
+        }
+        Text.Prompt();
+
+    }
+
+    public static void ConsumeItem(Item item) {
+        Text.EMPTY_FUNCTION();
+    }
+
+    public static void DescribeEquippable(Equippable equippable) {
+        Text.EMPTY_FUNCTION();
+    }
+
+    public static void EquipEquippable(Equippable equippable) {
+        Text.EMPTY_FUNCTION();
     }
 
     //endregion
@@ -980,110 +1005,6 @@ public class Main {
     //Check Map, Leave Room, and Search Room methods are in the Map region
 
     //endregion
-
-    //region Misc.==========================================================================================
-
-    //This prompts the user to press ENTER once they are finished reading (HELPER FUNCTION)
-    public static void Prompt(){
-
-        String temp;
-        System.out.print("\n[NEXT]\n>>");
-        temp = scnr.nextLine();
-        System.out.println("----------------------------------------------------------------------------------------------------\n");
-
-        return;
-
-    }
-
-    //This prompts the user to answer Y or N (HELPER FUNCTION)
-    public static void PromptYN(){
-
-        String answer;
-
-        while (true) {
-
-            System.out.print("\n(Y/N)\n>>");
-
-            answer = scnr.nextLine();
-
-            if (answer.equalsIgnoreCase("y")) {
-
-                ynValue = true;
-                System.out.println("----------------------------------------------------------------------------------------------------\n");
-                return;
-
-            }
-            else if (answer.equalsIgnoreCase("n")) {
-
-                ynValue = false;
-                System.out.println("----------------------------------------------------------------------------------------------------\n");
-                return;
-
-            }
-
-        }
-
-    }
-
-    //Function to print menu options, returns answer as int (HELPER FUNCTION)
-    public static int PrintMenu(String[] menu, Boolean cancel) {
-
-        if (cancel == true) {
-
-            menu = Arrays.copyOf(menu, menu.length + 1);
-            menu[menu.length - 1] = "Cancel";
-
-        }
-
-        while (true) {
-
-            for (int i = 0; i < menu.length; i++) {
-
-                System.out.println(i + ". " + menu[i]);
-
-            }
-
-            System.out.print("\n>>");
-
-            if (scnr.hasNextInt() == true) {
-
-                int answer = scnr.nextInt();
-                scnr.nextLine();
-
-                if (Between(answer, -1, menu.length)) {
-
-                    System.out.println("----------------------------------------------------------------------------------------------------\n");
-                    return answer;
-
-                }
-
-            }
-            else {
-                scnr.nextLine();
-            }
-
-        }
-
-    }
-
-    //Returns whether a is between b and c (HELPER FUNCTION)
-    public static boolean Between(int a, int b, int c) {
-
-        if ((b < a) && (a < c)) {
-
-            return true;
-
-        }
-        return false;
-
-    }
-
-    //Declares the emptiness found in the soul of many of our function brethren
-    public static void EMPTY_FUNCTION() {
-
-        System.out.println("EMPTY FUNCTION, FIX THIS: " + StackWalker.getInstance().walk(frames -> frames.skip(1).findFirst().map(StackWalker.StackFrame::getMethodName).orElse("Unknown")));
-
-    }
 
     //endregion
 
@@ -1142,7 +1063,7 @@ public class Main {
         //Introducing
         System.out.println("Our" + HERO + " Heroes " + RESET + "find themselves before the gaping maw of the" + XERO + " Blood Temple\n" + RESET);
         System.out.println("They enter");
-        Prompt();
+        Text.Prompt();
 
         //endregion
 

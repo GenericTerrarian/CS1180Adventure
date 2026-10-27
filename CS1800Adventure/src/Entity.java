@@ -2,21 +2,12 @@ import java.util.ArrayList;
 
 public class Entity extends NameObject {
 
-    int health;
-    int defense;
-    int attack;
-    int speed;
-
-    int effHLT;
-    int effDEF;
-    int effATK;
-    int effSPD;
-
+    int[] statistics; //0 Max HP, 1 Defense, 2 Attack, 3 Speed
+    int[] effStats;
     int HP;
     int AP = 0;
 
-    Attack attackI;
-    Attack attackII;
+    Attack[] attacks;
     Spell[] spells;
 
     ArrayList<Condition> conditions = new ArrayList<Condition>(0);
@@ -25,17 +16,9 @@ public class Entity extends NameObject {
 
         super(nm, desc);
 
-        this.health = stat[0];
-        this.defense = stat[1];
-        this.attack = stat[2];
-        this.speed = stat[3];
-        this.effHLT = health;
-        this.effDEF = defense;
-        this.effATK = attack;
-        this.effSPD = speed;
-
-        this.attackI = atk[0];
-        this.attackII = atk[1];
+        this.statistics = stat;
+        this.effStats = stat;
+        this.attacks = atk;
         this.spells = spl;
 
     }
@@ -43,9 +26,9 @@ public class Entity extends NameObject {
     //Calculates how much damage should be taken
     public int TakeDamage(int damage) {
 
-        if (damage > effDEF) {
-            HP = HP - (damage - effDEF);
-            return (damage - effDEF);
+        if (damage > effStats[1]) {
+            HP = HP - (damage - effStats[1]);
+            return (damage - effStats[1]);
         }
         HP = HP - 1;
         return 1;
@@ -59,8 +42,8 @@ public class Entity extends NameObject {
 
         this.HP = this.HP + ((int) (hp * healthMod));
 
-        if (this.HP > this.health) {
-            this.HP = this.health;
+        if (this.HP > this.effStats[0]) {
+            this.HP = this.effStats[0];
         }
 
         return (int) (hp * healthMod);
@@ -76,19 +59,19 @@ public class Entity extends NameObject {
 
         }
 
-        System.out.println("[" + HP + "/" + effHLT + "]");
+        System.out.print("[" + HP + "/" + effStats[0] + "]");
 
     }
 
     //Calculates the damage an attack should do to a target
     public int GetAttackDamage(Attack attack){
 
-        return (int) (attack.damageMultiplier * this.effATK);
+        return (int) (attack.damageMultiplier * this.effStats[2]);
 
     }
 
     //Increments damage from DOT conditions
-    public void CheckDOTConditions() {
+    public void TickDOT(DOT dot) {
 
         return;
 
